@@ -24,6 +24,7 @@ namespace PrequalificationTool.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CardApplication([Bind("FirstName,LastName,Dob,AnnualIncome")] CardApplicationViewModel cardApplication)
         {
+            ApplicationProcessor.ProcessApplication(cardApplication);
 
 
             return View();

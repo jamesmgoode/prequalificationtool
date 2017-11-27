@@ -21,8 +21,9 @@ namespace PrequalificationTool.Models
         [DataType(DataType.Date)]
         public DateTime Dob { get; set; }
         [Required]
-        [Display(Name = "Annual income")]
+        [Display(Name = "Annual income (£)")]
         [Range(0, 1000000000000000)]
+        [DataType(DataType.Currency)]
         public int AnnualIncome { get; set; }
     }
 }
