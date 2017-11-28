@@ -8,15 +8,18 @@ namespace PrequalificationTool.Models
         private const int IncomeThreshold = 30000;
 
         private readonly CardApplicationViewModel _cardApplication;
+        private readonly IDateTimeHelper _dateTimeHelper;
 
-        public ApplicationProcessor(CardApplicationViewModel cardApplication)
+        public ApplicationProcessor(CardApplicationViewModel cardApplication, IDateTimeHelper dateTimeHelper)
         {
             _cardApplication = cardApplication;
+            _dateTimeHelper = dateTimeHelper;
         }
 
         public bool ValidateAge()
         {
-            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            var now = _dateTimeHelper.Now();
+            now = new DateTime(now.Year, now.Month, now.Day);
             var datePlus18 = _cardApplication.Dob.AddYears(AgeThreshold);
             return datePlus18 >= now;
         }
