@@ -10,6 +10,13 @@ namespace PrequalificationTool.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IDateTimeHelper _dateTimeHelper;
+
+        public HomeController(IDateTimeHelper dateTimeHelper)
+        {
+            _dateTimeHelper = dateTimeHelper;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -24,7 +31,11 @@ namespace PrequalificationTool.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CardApplication([Bind("FirstName,LastName,Dob,AnnualIncome")] CardApplicationViewModel cardApplication)
         {
-            var decision = ApplicationProcessor.ProcessApplication(cardApplication);
+            var applicationProcessor = new ApplicationProcessor(cardApplication, _dateTimeHelper);
+
+            var validAge = applicationProcessor.ValidateAge();
+
+            var decision = applicationProcessor.ProcessApplication();
 
 
             return View();
