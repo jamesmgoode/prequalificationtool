@@ -92,7 +92,7 @@ namespace TestPrequalificationTool
 
             var card = applicationProcessor.ProcessApplication();
 
-            Assert.AreEqual("Barclaycard", card.CardName);
+            Assert.AreEqual("Vanquis", card.CardName);
         }
 
         [TestMethod]
@@ -110,7 +110,7 @@ namespace TestPrequalificationTool
 
             var card = applicationProcessor.ProcessApplication();
 
-            Assert.AreEqual("Barclaycard", card.CardName);
+            Assert.AreEqual("Vanquis", card.CardName);
         }
 
         [TestMethod]
