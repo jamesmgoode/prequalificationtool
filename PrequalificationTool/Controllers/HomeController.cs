@@ -11,12 +11,12 @@ namespace PrequalificationTool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DbContext _dbContext;
+        private readonly CardApplicationContext _context;
         private readonly IDateTimeHelper _dateTimeHelper;
 
-        public HomeController(DbContext dbContext, IDateTimeHelper dateTimeHelper)
+        public HomeController(CardApplicationContext context, IDateTimeHelper dateTimeHelper)
         {
-            _dbContext = dbContext;
+            _context = context;
             _dateTimeHelper = dateTimeHelper;
         }
 
@@ -48,7 +48,8 @@ namespace PrequalificationTool.Controllers
             }
 
             var card = applicationProcessor.ProcessApplication();
-            
+
+
             return View("CardOffer", card);
         }
 
