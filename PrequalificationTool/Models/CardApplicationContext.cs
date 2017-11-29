@@ -9,5 +9,8 @@ namespace PrequalificationTool.Models
     public class CardApplicationContext : DbContext
     {
         public virtual DbSet<ApplicationResult> ApplicationResults { get; set; }
+
+        public CardApplicationContext(DbContextOptions<CardApplicationContext> options) : base(options)
+        { }
     }
 }

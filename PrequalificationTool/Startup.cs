@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PrequalificationTool.Models;
 
 namespace PrequalificationTool
 {
@@ -22,6 +24,8 @@ namespace PrequalificationTool
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            var connectionString = Configuration.GetConnectionString("CardApplications");
+            services.AddDbContext<CardApplicationContext>(options => options.UseSqlServer(connectionString));
             services.AddSingleton<IDateTimeHelper>(new DateTimeHelper());
         }
 
