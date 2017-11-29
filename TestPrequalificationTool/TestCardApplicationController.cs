@@ -50,9 +50,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-
             var cardApplicationController = new CardApplicationController(null, mockTime.Object);
-
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -71,9 +69,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-
             var cardApplicationController = new CardApplicationController(null, mockTime.Object);
-
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -95,9 +91,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-
             var cardApplicationController = new CardApplicationController(null, mockTime.Object);
-
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -119,9 +113,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-
             var cardApplicationController = new CardApplicationController(null, mockTime.Object);
-
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
