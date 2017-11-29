@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PrequalificationTool.Models;
 
 namespace PrequalificationTool.Controllers
@@ -42,11 +38,26 @@ namespace PrequalificationTool.Controllers
             var validAge = applicationProcessor.ValidateAge(cardApplication.Dob);
             if (!validAge)
             {
+                var under18Result = new ApplicationResult
+                {
+                    FirstName = cardApplication.FirstName,
+                    LastName = cardApplication.LastName,
+                    Result = "No cards shown"
+                };
+                _context.ApplicationResults.Add(under18Result);
+
                 return View("AgeNotValid");
             }
 
             var card = applicationProcessor.ProcessApplication(cardApplication.AnnualIncome);
-
+            var cardResult = new ApplicationResult
+            {
+                FirstName = cardApplication.FirstName,
+                LastName = cardApplication.LastName,
+                Result = "Card shown: " + card.CardName
+            };
+            _context.ApplicationResults.Add(cardResult);
+            _context.SaveChanges();
 
             return View("CardOffer", card);
         }

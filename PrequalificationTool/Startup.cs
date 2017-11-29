@@ -44,7 +44,7 @@ namespace PrequalificationTool
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=CardApplication}/{action=CardApplication}");
             });
         }
     }
