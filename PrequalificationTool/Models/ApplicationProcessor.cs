@@ -28,9 +28,5 @@ namespace PrequalificationTool.Models
         {
             return _cardApplication.AnnualIncome > IncomeThreshold ? CardFactory.BarclayCard() : CardFactory.VanquisCard();
         }
-
-        public void RecordApplication()
-        {
-        }
     }
 }

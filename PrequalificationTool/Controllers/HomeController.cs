@@ -5,15 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PrequalificationTool.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PrequalificationTool.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DbContext _dbContext;
         private readonly IDateTimeHelper _dateTimeHelper;
 
-        public HomeController(IDateTimeHelper dateTimeHelper)
+        public HomeController(DbContext dbContext, IDateTimeHelper dateTimeHelper)
         {
+            _dbContext = dbContext;
             _dateTimeHelper = dateTimeHelper;
         }
 
@@ -45,7 +48,7 @@ namespace PrequalificationTool.Controllers
             }
 
             var card = applicationProcessor.ProcessApplication();
-
+            
             return View("CardOffer", card);
         }
 

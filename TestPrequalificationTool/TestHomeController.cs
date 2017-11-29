@@ -16,7 +16,7 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestCardApplication_BlankForm()
         {
-            var homeController = new HomeController(new DateTimeHelper());
+            var homeController = new HomeController(null, new DateTimeHelper());
 
             var result = homeController.CardApplication() as ViewResult;
 
@@ -26,7 +26,7 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestCardApplication_ModelStateInvalid()
         {
-            var homeController = new HomeController(new DateTimeHelper());
+            var homeController = new HomeController(null, new DateTimeHelper());
             homeController.ModelState.AddModelError("test_error", "error to test model state");
 
             var result = homeController.CardApplication(new CardApplicationViewModel()) as ViewResult;
@@ -41,7 +41,7 @@ namespace TestPrequalificationTool
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
-            var homeController = new HomeController(mockTime.Object);
+            var homeController = new HomeController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -62,7 +62,7 @@ namespace TestPrequalificationTool
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
-            var homeController = new HomeController(mockTime.Object);
+            var homeController = new HomeController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -86,7 +86,7 @@ namespace TestPrequalificationTool
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
-            var homeController = new HomeController(mockTime.Object);
+            var homeController = new HomeController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -110,7 +110,7 @@ namespace TestPrequalificationTool
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
-            var homeController = new HomeController(mockTime.Object);
+            var homeController = new HomeController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
