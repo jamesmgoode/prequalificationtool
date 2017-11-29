@@ -31,11 +31,20 @@ namespace PrequalificationTool.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CardApplication([Bind("FirstName,LastName,Dob,AnnualIncome")] CardApplicationViewModel cardApplication)
         {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var applicationProcessor = new ApplicationProcessor(cardApplication, _dateTimeHelper);
 
             var validAge = applicationProcessor.ValidateAge();
+            if(!validAge)
+            {
+                return View("AgeNotValid");
+            }
 
-            var decision = applicationProcessor.ProcessApplication();
+            var card = applicationProcessor.ProcessApplication();
 
 
             return View();

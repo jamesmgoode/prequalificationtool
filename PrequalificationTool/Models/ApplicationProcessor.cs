@@ -21,7 +21,7 @@ namespace PrequalificationTool.Models
             var now = _dateTimeHelper.Now();
             now = new DateTime(now.Year, now.Month, now.Day);
             var datePlus18 = _cardApplication.Dob.AddYears(AgeThreshold);
-            return datePlus18 >= now;
+            return now >= datePlus18;
         }
 
         public Card ProcessApplication()
