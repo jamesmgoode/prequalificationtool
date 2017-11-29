@@ -14,6 +14,16 @@ namespace TestPrequalificationTool
         private readonly DateTime fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
 
         [TestMethod]
+        public void TestCardApplication_BlankForm()
+        {
+            var homeController = new HomeController(new DateTimeHelper());
+
+            var result = homeController.CardApplication() as ViewResult;
+
+            Assert.AreEqual("CardApplication", result.ViewName);
+        }
+
+        [TestMethod]
         public void TestCardApplication_ModelStateInvalid()
         {
             var homeController = new HomeController(new DateTimeHelper());
@@ -21,6 +31,7 @@ namespace TestPrequalificationTool
 
             var result = homeController.CardApplication(new CardApplicationViewModel()) as ViewResult;
 
+            Assert.AreEqual("CardApplication", result.ViewName);
             Assert.IsInstanceOfType(result.Model, typeof(CardApplicationViewModel));
         }
 

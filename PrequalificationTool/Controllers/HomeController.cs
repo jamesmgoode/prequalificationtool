@@ -24,28 +24,28 @@ namespace PrequalificationTool.Controllers
 
         public IActionResult CardApplication()
         {
-            return View();
+            return View("CardApplication");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CardApplication([Bind("FirstName,LastName,Dob,AnnualIncome")] CardApplicationViewModel cardApplication)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View(cardApplication);
+                return View("CardApplication", cardApplication);
             }
 
             var applicationProcessor = new ApplicationProcessor(cardApplication, _dateTimeHelper);
 
             var validAge = applicationProcessor.ValidateAge();
-            if(!validAge)
+            if (!validAge)
             {
                 return View("AgeNotValid");
             }
 
             var card = applicationProcessor.ProcessApplication();
-            
+
             return View("CardOffer", card);
         }
 
