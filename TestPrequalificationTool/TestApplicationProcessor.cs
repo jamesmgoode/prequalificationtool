@@ -9,26 +9,18 @@ namespace TestPrequalificationTool
     [TestClass]
     public class TestApplicationProcessor
     {
-        private readonly DateTime fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
+        private readonly DateTime _fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
 
         #region ValidateAge
         [TestMethod]
         public void TestValidateAge_Under18()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(2000, 10, 24),
-                AnnualIncome = 100000
-            };
-
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
+            var applicationProcessor = new ApplicationProcessor(mockTime.Object);
+            var dob = new DateTime(2000, 10, 24);
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
-
-            bool validAge = applicationProcessor.ValidateAge();
+            var validAge = applicationProcessor.ValidateAge(dob);
 
             Assert.IsFalse(validAge);
         }
@@ -36,20 +28,25 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestValidateAge_Exactly18()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(1999, 11, 27),
-                AnnualIncome = 100000
-            };
-
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(new DateTime(2017, 11, 27));
+            var applicationProcessor = new ApplicationProcessor(mockTime.Object);
+            var dob = new DateTime(1999, 11, 27);
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
+            var validAge = applicationProcessor.ValidateAge(dob);
 
-            bool validAge = applicationProcessor.ValidateAge();
+            Assert.IsTrue(validAge);
+        }
+
+        [TestMethod]
+        public void TestValidateAge_18thBirthday()
+        {
+            var mockTime = new Mock<IDateTimeHelper>();
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
+            var applicationProcessor = new ApplicationProcessor(mockTime.Object);
+            var dob = new DateTime(1999, 11, 27, 1, 1, 1);
+
+            var validAge = applicationProcessor.ValidateAge(dob);
 
             Assert.IsTrue(validAge);
         }
@@ -57,20 +54,12 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestValidateAge_Over18()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(1969, 7, 20),
-                AnnualIncome = 100000
-            };
-
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
+            var applicationProcessor = new ApplicationProcessor(mockTime.Object);
+            var dob = new DateTime(1969, 7, 20);
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
-
-            bool validAge = applicationProcessor.ValidateAge();
+            var validAge = applicationProcessor.ValidateAge(dob);
 
             Assert.IsTrue(validAge);
         }
@@ -80,17 +69,10 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestProcessApplication_Under30000()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(2000, 10, 24),
-                AnnualIncome = 20000
-            };
+            var applicationProcessor = new ApplicationProcessor(null);
+            const int annualIncome = 20000;
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, new DateTimeHelper());
-
-            var card = applicationProcessor.ProcessApplication();
+            var card = applicationProcessor.ProcessApplication(annualIncome);
 
             Assert.AreEqual("Vanquis", card.CardName);
         }
@@ -98,17 +80,10 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestProcessApplication_Exactly30000()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(2000, 10, 24),
-                AnnualIncome = 30000
-            };
+            var applicationProcessor = new ApplicationProcessor(null);
+            const int annualIncome = 30000;
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, new DateTimeHelper());
-
-            var card = applicationProcessor.ProcessApplication();
+            var card = applicationProcessor.ProcessApplication(annualIncome);
 
             Assert.AreEqual("Vanquis", card.CardName);
         }
@@ -116,17 +91,10 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestProcessApplication_Over30000()
         {
-            var cardApplication = new CardApplicationViewModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Dob = new DateTime(2000, 10, 24),
-                AnnualIncome = 40000
-            };
+            var applicationProcessor = new ApplicationProcessor(null);
+            const int annualIncome = 40000;
 
-            var applicationProcessor = new ApplicationProcessor(cardApplication, new DateTimeHelper());
-
-            var card = applicationProcessor.ProcessApplication();
+            var card = applicationProcessor.ProcessApplication(annualIncome);
 
             Assert.AreEqual("Barclaycard", card.CardName);
         }

@@ -6,27 +6,24 @@ namespace PrequalificationTool.Models
     {
         private const int AgeThreshold = 18;
         private const int IncomeThreshold = 30000;
-
-        private readonly CardApplicationViewModel _cardApplication;
+        
         private readonly IDateTimeHelper _dateTimeHelper;
 
-        public ApplicationProcessor(CardApplicationViewModel cardApplication, IDateTimeHelper dateTimeHelper)
+        public ApplicationProcessor(IDateTimeHelper dateTimeHelper)
         {
-            _cardApplication = cardApplication;
             _dateTimeHelper = dateTimeHelper;
         }
 
-        public bool ValidateAge()
+        public bool ValidateAge(DateTime dob)
         {
             var now = _dateTimeHelper.Now();
-            now = new DateTime(now.Year, now.Month, now.Day);
-            var datePlus18 = _cardApplication.Dob.AddYears(AgeThreshold);
+            var datePlus18 = dob.AddYears(AgeThreshold);
             return now >= datePlus18;
         }
 
-        public Card ProcessApplication()
+        public Card ProcessApplication(int annualIncome)
         {
-            return _cardApplication.AnnualIncome > IncomeThreshold ? CardFactory.BarclayCard() : CardFactory.VanquisCard();
+            return annualIncome > IncomeThreshold ? CardFactory.BarclayCard() : CardFactory.VanquisCard();
         }
     }
 }

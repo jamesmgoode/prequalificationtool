@@ -1,24 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PrequalificationTool;
 using PrequalificationTool.Controllers;
 using PrequalificationTool.Models;
-using System;
 
 namespace TestPrequalificationTool
 {
     [TestClass]
-    public class TestHomeController
+    public class TestCardApplicationController
     {
-        private readonly DateTime fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
+        private readonly DateTime _fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
+
+        [TestMethod]
+        public void TestCardApplication_IndexRedirectsToBlankForm()
+        {
+            var cardApplicationController = new CardApplicationController(null, null);
+
+            var result = cardApplicationController.Index() as ViewResult;
+
+            Assert.AreEqual("CardApplication", result.ViewName);
+        }
 
         [TestMethod]
         public void TestCardApplication_BlankForm()
         {
-            var homeController = new HomeController(null, new DateTimeHelper());
+            var cardApplicationController = new CardApplicationController(null, null);
 
-            var result = homeController.CardApplication() as ViewResult;
+            var result = cardApplicationController.CardApplication() as ViewResult;
 
             Assert.AreEqual("CardApplication", result.ViewName);
         }
@@ -26,10 +36,10 @@ namespace TestPrequalificationTool
         [TestMethod]
         public void TestCardApplication_ModelStateInvalid()
         {
-            var homeController = new HomeController(null, new DateTimeHelper());
-            homeController.ModelState.AddModelError("test_error", "error to test model state");
+            var cardApplicationController = new CardApplicationController(null, null);
+            cardApplicationController.ModelState.AddModelError("test_error", "error to test model state");
 
-            var result = homeController.CardApplication(new CardApplicationViewModel()) as ViewResult;
+            var result = cardApplicationController.CardApplication(new CardApplicationViewModel()) as ViewResult;
 
             Assert.AreEqual("CardApplication", result.ViewName);
             Assert.IsInstanceOfType(result.Model, typeof(CardApplicationViewModel));
@@ -39,9 +49,9 @@ namespace TestPrequalificationTool
         public void TestCardApplication_Under18()
         {
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
 
-            var homeController = new HomeController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -51,7 +61,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 100000
             };
 
-            var result = homeController.CardApplication(cardApplication) as ViewResult;
+            var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
 
             Assert.AreEqual("AgeNotValid", result.ViewName);
         }
@@ -60,9 +70,9 @@ namespace TestPrequalificationTool
         public void TestCardApplication_Under30000()
         {
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
 
-            var homeController = new HomeController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -72,7 +82,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 20000
             };
 
-            var result = homeController.CardApplication(cardApplication) as ViewResult;
+            var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
 
             var card = result.Model as Card;
 
@@ -84,9 +94,9 @@ namespace TestPrequalificationTool
         public void TestCardApplication_Exactly30000()
         {
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
 
-            var homeController = new HomeController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -96,7 +106,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 30000
             };
 
-            var result = homeController.CardApplication(cardApplication) as ViewResult;
+            var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
 
             var card = result.Model as Card;
 
@@ -108,9 +118,9 @@ namespace TestPrequalificationTool
         public void TestCardApplication_Over30000()
         {
             var mockTime = new Mock<IDateTimeHelper>();
-            mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
+            mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
 
-            var homeController = new HomeController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
 
             var cardApplication = new CardApplicationViewModel
             {
@@ -120,7 +130,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 40000
             };
 
-            var result = homeController.CardApplication(cardApplication) as ViewResult;
+            var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
 
             var card = result.Model as Card;
 
