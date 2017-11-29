@@ -33,7 +33,7 @@ namespace PrequalificationTool.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return View();
+                return View(cardApplication);
             }
 
             var applicationProcessor = new ApplicationProcessor(cardApplication, _dateTimeHelper);
@@ -45,9 +45,8 @@ namespace PrequalificationTool.Controllers
             }
 
             var card = applicationProcessor.ProcessApplication();
-
-
-            return View();
+            
+            return View("CardOffer", card);
         }
 
         public IActionResult Error()

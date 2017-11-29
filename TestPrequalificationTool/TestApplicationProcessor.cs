@@ -23,7 +23,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 100000
             };
 
-            var mockTime = new Mock<DateTimeHelper>();
+            var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
             var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
@@ -44,7 +44,7 @@ namespace TestPrequalificationTool
                 AnnualIncome = 100000
             };
 
-            var mockTime = new Mock<DateTimeHelper>();
+            var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
             var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
@@ -61,11 +61,11 @@ namespace TestPrequalificationTool
             {
                 FirstName = "John",
                 LastName = "Doe",
-                Dob = new DateTime(1944, 6, 6),
+                Dob = new DateTime(1969, 7, 20),
                 AnnualIncome = 100000
             };
 
-            var mockTime = new Mock<DateTimeHelper>();
+            var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(fixedDate);
 
             var applicationProcessor = new ApplicationProcessor(cardApplication, mockTime.Object);
