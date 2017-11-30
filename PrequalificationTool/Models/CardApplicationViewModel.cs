@@ -19,7 +19,7 @@ namespace PrequalificationTool.Models
         public DateTime Dob { get; set; }
         [Required]
         [Display(Name = "Annual income (£)")]
-        [Range(0, 1000000000000000)]
+        [Range(0, int.MaxValue)]
         [DataType(DataType.Currency)]
         public int AnnualIncome { get; set; }
     }
