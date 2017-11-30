@@ -1,7 +1,8 @@
 ﻿@model Card
 @{
-    ViewData["Title"] = "CardOffer";
+    ViewData["Title"] = "Card Offer - " + Model.CardName;
 }
+
 <h2>@Model.CardName</h2>
 <p>@Model.Apr % APR</p>
 <p>@Model.PromoMessage</p>

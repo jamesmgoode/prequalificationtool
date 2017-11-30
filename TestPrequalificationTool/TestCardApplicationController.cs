@@ -79,7 +79,6 @@ namespace TestPrequalificationTool
             };
 
             var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
-
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);
@@ -101,7 +100,6 @@ namespace TestPrequalificationTool
             };
 
             var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
-
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);
@@ -123,7 +121,6 @@ namespace TestPrequalificationTool
             };
 
             var result = cardApplicationController.CardApplication(cardApplication) as ViewResult;
-
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);

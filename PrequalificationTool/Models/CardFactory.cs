@@ -6,9 +6,9 @@
         {
             return new Card
             {
-                CardName = "Barclaycard",
+                CardName = "Barclaycard Credit Card",
                 Apr = 15.5,
-                PromoMessage = "Yay barclaycard isn't that bad!"
+                PromoMessage = "Barclaycard credit cards are good!"
             };
         }
 
@@ -16,9 +16,9 @@
         {
             return new Card
             {
-                CardName = "Vanquis",
-                Apr = 20.1,
-                PromoMessage = "When you're too poor for a real bank."
+                CardName = "Vanquis Card",
+                Apr = 20.5,
+                PromoMessage = "Vanquis is also fine."
             };
         }
     }

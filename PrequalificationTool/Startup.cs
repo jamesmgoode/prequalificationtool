@@ -35,7 +35,7 @@ namespace PrequalificationTool
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/CardApplication/Error");
             }
 
             app.UseStaticFiles();
