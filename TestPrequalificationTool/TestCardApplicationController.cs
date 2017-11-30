@@ -82,7 +82,7 @@ namespace TestPrequalificationTool
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);
-            Assert.AreEqual("Vanquis", card.CardName);
+            Assert.AreEqual("Vanquis Card", card.CardName);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace TestPrequalificationTool
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);
-            Assert.AreEqual("Vanquis", card.CardName);
+            Assert.AreEqual("Vanquis Card", card.CardName);
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace TestPrequalificationTool
             var card = result.Model as Card;
 
             Assert.AreEqual("CardOffer", result.ViewName);
-            Assert.AreEqual("Barclaycard", card.CardName);
+            Assert.AreEqual("Barclaycard Credit Card", card.CardName);
         }
     }
 }
