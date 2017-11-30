@@ -40,6 +40,7 @@ namespace PrequalificationTool.Controllers
                     Result = "No cards shown"
                 };
                 _context.ApplicationResults.Add(under18Result);
+                _context.SaveChanges();
 
                 return View("AgeNotValid");
             }
