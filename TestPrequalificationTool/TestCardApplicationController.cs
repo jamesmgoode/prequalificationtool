@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PrequalificationTool;
@@ -12,15 +13,12 @@ namespace TestPrequalificationTool
     public class TestCardApplicationController
     {
         private readonly DateTime _fixedDate = new DateTime(2017, 11, 27, 1, 1, 1);
+        private readonly Mock<CardApplicationContext> _mockDbContext = new Mock<CardApplicationContext>(new DbContextOptions<CardApplicationContext>());
 
-        [TestMethod]
-        public void TestCardApplication_IndexRedirectsToBlankForm()
+        [TestInitialize]
+        public void Initialize()
         {
-            var cardApplicationController = new CardApplicationController(null, null);
-
-            var result = cardApplicationController.Index() as ViewResult;
-
-            Assert.AreEqual("CardApplication", result.ViewName);
+            _mockDbContext.Setup(db => db.ApplicationResults).ReturnsDbSet(new ApplicationResult[0]);
         }
 
         [TestMethod]
@@ -50,7 +48,8 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
+
+            var cardApplicationController = new CardApplicationController(_mockDbContext.Object, mockTime.Object);
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -69,7 +68,8 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
+
+            var cardApplicationController = new CardApplicationController(_mockDbContext.Object, mockTime.Object);
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -91,7 +91,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(_mockDbContext.Object, mockTime.Object);
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",
@@ -113,7 +113,7 @@ namespace TestPrequalificationTool
         {
             var mockTime = new Mock<IDateTimeHelper>();
             mockTime.Setup(mt => mt.Now()).Returns(_fixedDate);
-            var cardApplicationController = new CardApplicationController(null, mockTime.Object);
+            var cardApplicationController = new CardApplicationController(_mockDbContext.Object, mockTime.Object);
             var cardApplication = new CardApplicationViewModel
             {
                 FirstName = "John",

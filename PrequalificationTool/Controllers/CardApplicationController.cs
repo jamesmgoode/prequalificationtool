@@ -14,11 +14,6 @@ namespace PrequalificationTool.Controllers
             _dateTimeHelper = dateTimeHelper;
         }
 
-        public IActionResult Index()
-        {
-            return View("CardApplication");
-        }
-
         public IActionResult CardApplication()
         {
             return View("CardApplication");
